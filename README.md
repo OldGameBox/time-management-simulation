@@ -16,7 +16,7 @@ Then visit `http://localhost:8080`.
 
 ## Firebase setup
 
-Live presence, the quiz records, team sorting, and the round phase use Firebase Realtime Database. The copy of this repo ships with an empty config. Do not point it at Firestore.
+Live presence, the quiz records, team sorting, and the round phase use Firebase Realtime Database. The classroom config is filled in. Do not point it at Firestore.
 
 1. Open [console.firebase.google.com](https://console.firebase.google.com) and create a project.
 2. Add a Web app and copy its `firebaseConfig` object.
