@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Crypto Wallet Heist</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23041108'/%3E%3Crect x='2' y='2' width='12' height='12' fill='none' stroke='%2339ff14' stroke-width='1.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <main class="shell">
+    <p id="config-notice" class="notice" role="status">
+      Firebase is not configured yet. Paste your Realtime Database config into FIREBASE_CONFIG at the top of app.js. The quiz still works on this device. Live sorting and the participant count stay offline until then.
+    </p>
+    <p id="sync-warning" class="notice notice-error" role="alert" hidden></p>
+
+    <section id="view-landing" class="view">
+      <p class="eyebrow">Classroom console</p>
+      <h1>The Crypto Wallet Heist</h1>
+      <p class="lede">Two companies. One wallet. Answer three questions, then wait for the merge.</p>
+      <div class="actions">
+        <button type="button" id="join-hacker" class="btn btn-primary">Join as Hacker (Participant)</button>
+        <button type="button" id="admin-access" class="btn">Admin Access</button>
+      </div>
+    </section>
+
+    <section id="view-admin-auth" class="view" hidden>
+      <p class="eyebrow">Admin</p>
+      <h1>The Crypto Wallet Heist</h1>
+      <p class="lede">Enter the classroom passcode to open the dashboard.</p>
+      <form id="passcode-form" class="stack">
+        <label for="passcode">Passcode</label>
+        <input id="passcode" name="passcode" type="password" autocomplete="off" spellcheck="false">
+        <p id="passcode-error" class="error" hidden>Wrong passcode.</p>
+        <button type="submit" class="btn btn-primary">Enter</button>
+      </form>
+      <button type="button" class="btn btn-text" data-goto="landing">Back</button>
+    </section>
+
+    <section id="view-admin" class="view" hidden>
+      <p class="eyebrow">Admin dashboard</p>
+      <h1>The Crypto Wallet Heist</h1>
+      <div class="stat">
+        <p class="stat-label">Connected participants</p>
+        <p id="connected-count" class="stat-value" aria-live="polite">—</p>
+      </div>
+      <p class="phase-line">Phase: <span id="phase-label">Lobby</span></p>
+      <p id="admin-message" class="admin-message" role="status"></p>
+      <div class="actions">
+        <button type="button" id="sort-teams" class="btn btn-primary">Sort Teams</button>
+        <button type="button" id="start-round-1" class="btn" disabled>Start Round 1</button>
+        <button type="button" id="start-round-2" class="btn" disabled>Start Round 2</button>
+      </div>
+      <button type="button" class="btn btn-text" data-goto="landing">Back</button>
+      <footer class="security-note">
+        The passcode only hides the dashboard and is visible in the page source.
+      </footer>
+    </section>
+
+    <section id="view-join" class="view" hidden>
+      <p class="eyebrow">Hacker</p>
+      <h1>The Crypto Wallet Heist</h1>
+      <p class="lede">Use a display name so the room knows who joined.</p>
+      <form id="join-form" class="stack">
+        <label for="display-name">Display name</label>
+        <input id="display-name" name="display-name" type="text" maxlength="60" autocomplete="nickname" spellcheck="false">
+        <p id="name-error" class="error" hidden>Enter a display name.</p>
+        <button type="submit" class="btn btn-primary">Continue</button>
+      </form>
+      <button type="button" class="btn btn-text" data-goto="landing">Back</button>
+    </section>
+
+    <section id="view-quiz" class="view" hidden>
+      <p class="eyebrow">Hacker · <span id="participant-name-quiz"></span></p>
+      <h1>The Crypto Wallet Heist</h1>
+      <p class="progress">Question <span id="quiz-number">1</span> of 3</p>
+      <h2 id="quiz-prompt"></h2>
+      <div class="actions">
+        <button type="button" class="btn choice" data-answer="A">
+          <span class="choice-key">A</span>
+          <span id="choice-a-label"></span>
+        </button>
+        <button type="button" class="btn choice" data-answer="B">
+          <span class="choice-key">B</span>
+          <span id="choice-b-label"></span>
+        </button>
+      </div>
+      <button type="button" class="btn btn-text" data-goto="landing">Back</button>
+    </section>
+
+    <section id="view-waiting" class="view" hidden>
+      <p class="eyebrow">Hacker · <span id="participant-name-waiting"></span></p>
+      <h1>The Crypto Wallet Heist</h1>
+      <div class="spinner" role="status" aria-label="Waiting"></div>
+      <p class="waiting-copy">Waiting for Admin to initialize merge...</p>
+      <button type="button" class="btn btn-text" data-goto="landing">Back</button>
+    </section>
+
+    <section id="view-reveal" class="view" hidden>
+      <p class="eyebrow">Hacker · <span id="participant-name-reveal"></span></p>
+      <h1>The Crypto Wallet Heist</h1>
+      <div id="reveal-assigned">
+        <p class="role-label">Company</p>
+        <p id="reveal-company" class="role-value"></p>
+        <p class="role-label">Department</p>
+        <p id="reveal-department" class="role-value"></p>
+      </div>
+      <div id="reveal-observer" hidden>
+        <p class="role-value">Observer</p>
+      </div>
+      <p class="muted">Waiting for the round to start.</p>
+      <button type="button" class="btn btn-text" data-goto="landing">Back</button>
+    </section>
+
+    <section id="view-brief" class="view" hidden>
+      <p class="eyebrow" id="brief-identity"></p>
+      <h1>The Crypto Wallet Heist</h1>
+      <h2 id="brief-round"></h2>
+      <p id="brief-body" class="brief"></p>
+      <button type="button" class="btn btn-text" data-goto="landing">Back</button>
+    </section>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
