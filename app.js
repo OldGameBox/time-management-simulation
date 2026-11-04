@@ -108,7 +108,9 @@ const state = {
   connectedCount: null,
   participantsReady: false,
   quizLocked: false,
-  sortBusy: false
+  sortBusy: false,
+  eventsBound: false,
+  routed: false
 };
 
 function $(id) {
@@ -349,7 +351,43 @@ function normalizeRemote(id, value) {
   };
 }
 
+function entryRoleFromSearch(search) {
+  const role = new URLSearchParams(search || "").get("as");
+  if (role === "admin" || role === "participant") return role;
+  return "";
+}
+
+function entryHref(href, role) {
+  const url = new URL(href);
+  url.hash = "";
+  url.searchParams.set("as", role);
+  return url.href;
+}
+
+function entryRole() {
+  if (typeof window === "undefined" || !window.location) return "";
+  return entryRoleFromSearch(window.location.search);
+}
+
+function entryUrl(role) {
+  try {
+    return entryHref(window.location.href, role);
+  } catch (err) {
+    const base = String(window.location.href || "").split("#")[0].split("?")[0];
+    return base + "?as=" + role;
+  }
+}
+
+function renderEntryLinks() {
+  const admin = $("entry-url-admin");
+  const participant = $("entry-url-participant");
+  if (admin) admin.textContent = entryUrl("admin");
+  if (participant) participant.textContent = entryUrl("participant");
+}
+
 function showView(name) {
+  // The entry hint only hides the chooser before this script runs.
+  if (document.documentElement) document.documentElement.removeAttribute("data-entry");
   document.querySelectorAll(".view").forEach((view) => {
     view.hidden = view.id !== "view-" + name;
   });
@@ -547,6 +585,13 @@ function renderAdmin() {
   $("start-round-2").disabled = !unlocked;
 }
 
+function connectSavedParticipant() {
+  if (!state.firebaseReady || !state.me || !state.me.id || !state.me.name) return;
+  setupPresence(state.me.id);
+  watchOwnRecord(state.me.id);
+  pushParticipant(state.me);
+}
+
 function openAdmin() {
   if (state.adminAuthed) {
     showView("admin");
@@ -554,6 +599,7 @@ function openAdmin() {
     renderAdmin();
     return;
   }
+  if (state.mode === "admin-auth") return;
   $("passcode-error").hidden = true;
   $("passcode").value = "";
   showView("admin-auth");
@@ -563,14 +609,11 @@ function openAdmin() {
 function openHacker() {
   if (!state.me) state.me = readLocal();
   if (state.me && state.me.name) {
-    if (state.firebaseReady) {
-      setupPresence(state.me.id);
-      watchOwnRecord(state.me.id);
-      pushParticipant(state.me);
-    }
+    connectSavedParticipant();
     renderParticipant();
     return;
   }
+  if (state.mode === "join") return;
   $("name-error").hidden = true;
   showView("join");
   $("display-name").focus();
@@ -704,9 +747,10 @@ function onStartRound(phase) {
   });
 }
 
-function boot() {
-  initFirebase();
-  listenToSession();
+function bindEvents() {
+  if (state.eventsBound) return;
+  if (!$("join-hacker") || !$("admin-access")) return;
+  state.eventsBound = true;
 
   $("join-hacker").addEventListener("click", openHacker);
   $("admin-access").addEventListener("click", openAdmin);
@@ -724,23 +768,58 @@ function boot() {
   document.querySelectorAll("[data-goto]").forEach((button) => {
     button.addEventListener("click", () => showView(button.getAttribute("data-goto")));
   });
+  document.querySelectorAll(".entry-url").forEach((node) => {
+    node.addEventListener("click", () => {
+      const selection = window.getSelection();
+      if (!selection) return;
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    });
+  });
+}
+
+function routeEntry() {
+  bindEvents();
+  renderEntryLinks();
+  if (state.routed) {
+    if (state.adminAuthed) {
+      listenToParticipants();
+      renderAdmin();
+    }
+    if (state.mode !== "admin" && state.mode !== "admin-auth") {
+      connectSavedParticipant();
+    }
+    return;
+  }
+  state.routed = true;
+
+  const role = entryRole();
+  // Admin entry must not read or write the stored participant seat.
+  if (role === "admin") {
+    openAdmin();
+    return;
+  }
+  if (role === "participant") {
+    openHacker();
+    return;
+  }
 
   const saved = readLocal();
   if (saved && saved.name) {
     state.me = saved;
-    if (state.firebaseReady) {
-      setupPresence(saved.id);
-      watchOwnRecord(saved.id);
-      pushParticipant(saved);
-    }
+    connectSavedParticipant();
     renderParticipant();
-  } else {
-    showView("landing");
+    return;
   }
+  showView("landing");
 }
 
-if (typeof document !== "undefined") {
-  boot();
+function boot() {
+  initFirebase();
+  listenToSession();
+  routeEntry();
 }
 
 if (typeof module !== "undefined" && module.exports) {
@@ -754,6 +833,8 @@ if (typeof module !== "undefined" && module.exports) {
     phaseAfterSort,
     roundsUnlocked,
     asAnswers,
-    briefText
+    briefText,
+    entryRoleFromSearch,
+    entryHref
   };
 }
