@@ -6,6 +6,14 @@
   <title>The Crypto Wallet Heist</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23041108'/%3E%3Crect x='2' y='2' width='12' height='12' fill='none' stroke='%2339ff14' stroke-width='1.5'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    (function () {
+      var role = new URLSearchParams(window.location.search).get("as");
+      if (role === "admin" || role === "participant") {
+        document.documentElement.setAttribute("data-entry", role);
+      }
+    })();
+  </script>
 </head>
 <body>
   <div class="scanlines" aria-hidden="true"></div>
@@ -22,6 +30,16 @@
       <div class="actions">
         <button type="button" id="join-hacker" class="btn btn-primary">Join as Hacker (Participant)</button>
         <button type="button" id="admin-access" class="btn">Admin Access</button>
+      </div>
+      <div class="entry-links">
+        <div class="entry-link">
+          <p id="entry-admin-label" class="entry-label">Admin</p>
+          <p id="entry-url-admin" class="entry-url" aria-labelledby="entry-admin-label"></p>
+        </div>
+        <div class="entry-link">
+          <p id="entry-participant-label" class="entry-label">Participant</p>
+          <p id="entry-url-participant" class="entry-url" aria-labelledby="entry-participant-label"></p>
+        </div>
       </div>
     </section>
 
@@ -122,8 +140,14 @@
     </section>
   </main>
 
+  <script src="app.js"></script>
+  <script>
+    routeEntry();
+  </script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-  <script src="app.js"></script>
+  <script>
+    boot();
+  </script>
 </body>
 </html>

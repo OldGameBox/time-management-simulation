@@ -271,6 +271,43 @@ input:focus {
   font-size: 0.85rem;
 }
 
+.entry-links {
+  margin-top: 1.15rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--line-dim);
+  display: grid;
+  gap: 0.85rem;
+}
+
+.entry-link {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.entry-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.entry-url {
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  color: var(--green-soft);
+  background: #06150c;
+  border: 1px solid var(--line-dim);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  user-select: all;
+  cursor: text;
+}
+
+html[data-entry="admin"] #view-landing,
+html[data-entry="participant"] #view-landing {
+  display: none !important;
+}
+
 .spinner {
   width: 2.4rem;
   height: 2.4rem;
