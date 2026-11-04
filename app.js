@@ -15,37 +15,37 @@ const FIREBASE_CONFIG = {
 const INSTRUCTIONS = {
   clock: {
     hacker1: {
-      round1: "Steal your slice of the wallet: the first eight characters of the vault seed. The deadline is a binding promise. Finish this fragment before you start anything else. Hand off the exact characters, in order, with nothing left vague.",
+      round1: "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"\n\nRules: Focus completely on your individual task. Finish your current step before starting another. Avoid speaking to other players. Avoid distractions at all costs.\n\nTiming: Round 1 lasts 5 minutes, but you have a strict 4-minute deadline to submit your fragments to Integration. Finishing quickly is your top priority.",
       round2: "The deadline just tightened. Finish the seed slice and stop. Do not open a second task. Deliver one precise handoff and nothing else."
     },
     hacker2: {
-      round1: "Steal your slice of the wallet: the routing ledger. The deadline is binding. Finish this ledger before the next task. Write each hop in order and hand off that exact sequence.",
+      round1: "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"\n\nRules: Focus completely on your individual task. Finish your current step before starting another. Avoid speaking to other players. Avoid distractions at all costs.\n\nTiming: Round 1 lasts 5 minutes, but you have a strict 4-minute deadline to submit your fragments to Integration. Finishing quickly is your top priority.",
       round2: "The clock moved up. Close the ledger as your only job. One finished sequence, then a precise handoff. Leave no hop for later."
     },
     hacker3: {
-      round1: "Steal your slice of the wallet: the hardware-lock firmware. Treat it as one task with a binding deadline. When the decode is done, hand off the checksum and the unlocked bytes exactly.",
+      round1: "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"\n\nRules: Focus completely on your individual task. Finish your current step before starting another. Avoid speaking to other players. Avoid distractions at all costs.\n\nTiming: Round 1 lasts 5 minutes, but you have a strict 4-minute deadline to submit your fragments to Integration. Finishing quickly is your top priority.",
       round2: "The deadline tightened. Finish the firmware before you touch anything else. One finished artifact, handed off with no loose ends."
     },
     integration: {
-      round1: "Do not steal a slice. Watch the three hacker streams and note where their handoffs clash in format, order, or timing. Deadlines are binding, so finish each note before you start the next.",
+      round1: "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"\n\nRules: Focus completely on your individual task. Avoid speaking to other players. Avoid distractions at all costs.\n\nTiming: Round 1 lasts 5 minutes. You must compile the final key. You cannot accept any codes from the Hackers after the 4-minute mark.",
       round2: "Merge the three wallet pieces into one handoff. Complete one merge step before the next. The deadline is binding. Deliver a single exact package."
     }
   },
   flow: {
     hacker1: {
-      round1: "Steal your slice of the wallet: the first eight characters of the vault seed. The deadline is a flexible target. If a colleague asks for help, drop in immediately, then keep your decode moving alongside theirs.",
+      round1: "Style: Flexible, responsive, and adaptive. \"Stay flexible. Adapt as things happen.\"\n\nRules: Your role is to help your team succeed. Communicate openly and discuss topics freely. You are flexible with priorities\u2014if an urgent request comes up, drop what you are doing to help.\n\nTiming: Round 1 lasts 5 minutes. There is no rush. You may ask the Timekeeper once for an extra 30 seconds.",
       round2: "A new parallel lead is live: a second seed echo on another chain. Keep both streams moving. Help the moment someone is stuck. The deadline can flex."
     },
     hacker2: {
-      round1: "Steal your slice of the wallet: the routing ledger. Keep several hops in play. If someone needs you, help immediately, then pick the ledger back up. The deadline is a guide, not a wall.",
+      round1: "Style: Flexible, responsive, and adaptive. \"Stay flexible. Adapt as things happen.\"\n\nRules: Your role is to help your team succeed. Communicate openly and discuss topics freely. You are flexible with priorities\u2014if an urgent request comes up, drop what you are doing to help.\n\nTiming: Round 1 lasts 5 minutes. There is no rush. You may ask the Timekeeper once for an extra 30 seconds.",
       round2: "A new parallel lead just opened: a shadow route beside the ledger. Run both. Drop everything when a teammate asks, then keep the streams moving."
     },
     hacker3: {
-      round1: "Steal your slice of the wallet: the hardware-lock firmware. Work it while you stay available. Help arrives before your next byte. Keep more than one stream moving, and treat the deadline as flexible.",
+      round1: "Style: Flexible, responsive, and adaptive. \"Stay flexible. Adapt as things happen.\"\n\nRules: Your role is to help your team succeed. Communicate openly and discuss topics freely. You are flexible with priorities\u2014if an urgent request comes up, drop what you are doing to help.\n\nTiming: Round 1 lasts 5 minutes. There is no rush. You may ask the Timekeeper once for an extra 30 seconds.",
       round2: "A second firmware lead just landed. Run it in parallel with the lock. If a hacker is blocked, help immediately. The deadline is a flexible target."
     },
     integration: {
-      round1: "Do not steal a slice. Watch the three hacker streams and note clashes as they happen. If someone is stuck, help immediately, then come back to your notes. Keep several observations moving. Deadlines are flexible targets.",
+      round1: "Style: Flexible, responsive, and adaptive. \"Stay flexible. Adapt as things happen.\"\n\nRules: Your role is to help your team succeed. Communicate openly and discuss topics freely. You are flexible with priorities\u2014if an urgent request comes up, drop what you are doing to help.\n\nTiming: Round 1 lasts 5 minutes. There is no rush. You may ask the Timekeeper once for an extra 30 seconds.",
       round2: "Merge the wallet pieces into one handoff while the room is still moving. If a piece is blocked, help immediately, then pull the streams together. The deadline can flex. Leave one shared handoff."
     }
   },
