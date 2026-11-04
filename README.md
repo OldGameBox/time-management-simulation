@@ -62,4 +62,4 @@ The admin passcode is `merger2026`. It is checked only in the browser. It hides 
 
 ## Round instructions
 
-Edit the `INSTRUCTIONS` object in `app.js`. It is keyed by company (`clock`, `flow`, or `observer`), then by department (`hacker1`, `hacker2`, `hacker3`, `integration`), then by round (`round1`, `round2`). Observer notes have no department, so `round1` and `round2` sit directly on `observer`.
+Edit the `INSTRUCTIONS` object in `app.js`. Round 1 is keyed by company (`clock` or `flow`), then by department (`hacker1`, `hacker2`, `hacker3`, `integration`). Round 2 is keyed only by the original company (`clock` or `flow`), so department does not change that copy. Observer notes have no department, so `round1` and `round2` sit directly on `observer`.

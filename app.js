@@ -10,44 +10,58 @@ const FIREBASE_CONFIG = {
   measurementId: "G-1QW1WBXPYT"
 };
 
-// Edit the briefs here. Shape: company → department → round.
+// Edit the briefs here.
+// Round 1 is company → department. Style, Rules, and Timing are separate paragraphs.
+// Round 2 is the original company only, so department does not change the copy.
 // Observer has no department, so round1 and round2 sit directly on observer.
+const CLOCK_HACKER_ROUND1 = [
+  "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"",
+  "Rules: Follow the exact hand-off chain (A → B → C) without skipping steps. Focus completely on your individual task. Finish your current step before starting another. Avoid speaking to other players. Avoid distractions at all costs.",
+  "Timing: Round 1 lasts 5 minutes, but you have a strict 4-minute deadline to submit your fragments to Integration. Finishing quickly is your top priority."
+].join("\n\n");
+
+const CLOCK_INTEGRATION_ROUND1 = [
+  "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"",
+  "Rules: Follow the exact hand-off chain (A → B → C → Integration) without skipping steps. Focus completely on your individual task. Avoid speaking to other players. Avoid distractions at all costs.",
+  "Timing: Round 1 lasts 5 minutes. You must compile the final key. You cannot accept any codes from the Hackers after the 4-minute mark."
+].join("\n\n");
+
+const FLOW_ROUND1 = [
+  "Style: Flexible, responsive, and adaptive. \"Stay flexible. Adapt as things happen.\"",
+  "Rules: Your role is to help your team succeed. You may change the order of supporting activities, but you must ultimately pass official answers through the required A → B → C → Integration chain. Communicate openly and discuss topics freely. You are flexible with priorities—if an urgent request comes up, drop what you are doing to help.",
+  "Timing: Round 1 lasts 5 minutes. There is no rush. You may ask the Timekeeper once for an extra 30 seconds."
+].join("\n\n");
+
+const CLOCK_ROUND2 = [
+  "Focus on working on your own individual task.",
+  "Finishing your task quickly is the goal; meeting the deadline is the top priority.",
+  "Avoid speaking to other players.",
+  "Avoid distractions at any cost.",
+  "Urgency: If you feel your department is not going to make it on time, you are encouraged to rush the other people in your department."
+].join("\n\n");
+
+const FLOW_ROUND2 = [
+  "Your role is to help your team succeed; working together and communicating with others is the goal.",
+  "There is no rush and you can discuss other topics outside of this assignment freely.",
+  "You are flexible with work priorities, so if something more urgent comes up (like an emergency ticket), you can decide to prioritize it over other tasks."
+].join("\n\n");
+
+const ROUND2_MERGE_NOTE = "The companies have merged. You are still briefed as your original company.";
+
 const INSTRUCTIONS = {
   clock: {
-    hacker1: {
-      round1: "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"\n\nRules: Focus completely on your individual task. Finish your current step before starting another. Avoid speaking to other players. Avoid distractions at all costs.\n\nTiming: Round 1 lasts 5 minutes, but you have a strict 4-minute deadline to submit your fragments to Integration. Finishing quickly is your top priority.",
-      round2: "The deadline just tightened. Finish the seed slice and stop. Do not open a second task. Deliver one precise handoff and nothing else."
-    },
-    hacker2: {
-      round1: "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"\n\nRules: Focus completely on your individual task. Finish your current step before starting another. Avoid speaking to other players. Avoid distractions at all costs.\n\nTiming: Round 1 lasts 5 minutes, but you have a strict 4-minute deadline to submit your fragments to Integration. Finishing quickly is your top priority.",
-      round2: "The clock moved up. Close the ledger as your only job. One finished sequence, then a precise handoff. Leave no hop for later."
-    },
-    hacker3: {
-      round1: "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"\n\nRules: Focus completely on your individual task. Finish your current step before starting another. Avoid speaking to other players. Avoid distractions at all costs.\n\nTiming: Round 1 lasts 5 minutes, but you have a strict 4-minute deadline to submit your fragments to Integration. Finishing quickly is your top priority.",
-      round2: "The deadline tightened. Finish the firmware before you touch anything else. One finished artifact, handed off with no loose ends."
-    },
-    integration: {
-      round1: "Style: Structured, sequential, and deadline-focused. \"One task at a time. Every step has its place.\"\n\nRules: Focus completely on your individual task. Avoid speaking to other players. Avoid distractions at all costs.\n\nTiming: Round 1 lasts 5 minutes. You must compile the final key. You cannot accept any codes from the Hackers after the 4-minute mark.",
-      round2: "Merge the three wallet pieces into one handoff. Complete one merge step before the next. The deadline is binding. Deliver a single exact package."
-    }
+    round2: CLOCK_ROUND2,
+    hacker1: { round1: CLOCK_HACKER_ROUND1 },
+    hacker2: { round1: CLOCK_HACKER_ROUND1 },
+    hacker3: { round1: CLOCK_HACKER_ROUND1 },
+    integration: { round1: CLOCK_INTEGRATION_ROUND1 }
   },
   flow: {
-    hacker1: {
-      round1: "Style: Flexible, responsive, and adaptive. \"Stay flexible. Adapt as things happen.\"\n\nRules: Your role is to help your team succeed. Communicate openly and discuss topics freely. You are flexible with priorities\u2014if an urgent request comes up, drop what you are doing to help.\n\nTiming: Round 1 lasts 5 minutes. There is no rush. You may ask the Timekeeper once for an extra 30 seconds.",
-      round2: "A new parallel lead is live: a second seed echo on another chain. Keep both streams moving. Help the moment someone is stuck. The deadline can flex."
-    },
-    hacker2: {
-      round1: "Style: Flexible, responsive, and adaptive. \"Stay flexible. Adapt as things happen.\"\n\nRules: Your role is to help your team succeed. Communicate openly and discuss topics freely. You are flexible with priorities\u2014if an urgent request comes up, drop what you are doing to help.\n\nTiming: Round 1 lasts 5 minutes. There is no rush. You may ask the Timekeeper once for an extra 30 seconds.",
-      round2: "A new parallel lead just opened: a shadow route beside the ledger. Run both. Drop everything when a teammate asks, then keep the streams moving."
-    },
-    hacker3: {
-      round1: "Style: Flexible, responsive, and adaptive. \"Stay flexible. Adapt as things happen.\"\n\nRules: Your role is to help your team succeed. Communicate openly and discuss topics freely. You are flexible with priorities\u2014if an urgent request comes up, drop what you are doing to help.\n\nTiming: Round 1 lasts 5 minutes. There is no rush. You may ask the Timekeeper once for an extra 30 seconds.",
-      round2: "A second firmware lead just landed. Run it in parallel with the lock. If a hacker is blocked, help immediately. The deadline is a flexible target."
-    },
-    integration: {
-      round1: "Style: Flexible, responsive, and adaptive. \"Stay flexible. Adapt as things happen.\"\n\nRules: Your role is to help your team succeed. Communicate openly and discuss topics freely. You are flexible with priorities\u2014if an urgent request comes up, drop what you are doing to help.\n\nTiming: Round 1 lasts 5 minutes. There is no rush. You may ask the Timekeeper once for an extra 30 seconds.",
-      round2: "Merge the wallet pieces into one handoff while the room is still moving. If a piece is blocked, help immediately, then pull the streams together. The deadline can flex. Leave one shared handoff."
-    }
+    round2: FLOW_ROUND2,
+    hacker1: { round1: FLOW_ROUND1 },
+    hacker2: { round1: FLOW_ROUND1 },
+    hacker3: { round1: FLOW_ROUND1 },
+    integration: { round1: FLOW_ROUND1 }
   },
   observer: {
     round1: "You are observing only. You have no heist assignment. Watch how the room works and keep notes for the debrief.",
@@ -554,8 +568,27 @@ function briefText(company, department, phase) {
     return (INSTRUCTIONS.observer && INSTRUCTIONS.observer[phase]) || "";
   }
   const companyBlock = INSTRUCTIONS[company];
-  const deptBlock = companyBlock && companyBlock[department];
+  if (!companyBlock) return "";
+  if (phase === "round2") return companyBlock.round2 || "";
+  const deptBlock = companyBlock[department];
   return (deptBlock && deptBlock[phase]) || "";
+}
+
+function briefParagraphs(text) {
+  return String(text || "").split(/\n\n+/).map((part) => part.trim()).filter(Boolean);
+}
+
+function renderBriefParagraphs(text) {
+  const body = $("brief-body");
+  body.textContent = "";
+  const paragraphs = briefParagraphs(text);
+  const lines = paragraphs.length ? paragraphs : ["No brief is available for this seat yet."];
+  lines.forEach((line) => {
+    const p = document.createElement("p");
+    p.className = "brief";
+    p.textContent = line;
+    body.appendChild(p);
+  });
 }
 
 function renderBrief() {
@@ -565,8 +598,11 @@ function renderBrief() {
   const deptLabel = me.company === "observer" ? "" : (DEPARTMENT_LABELS[me.department] || "");
   $("brief-identity").textContent = deptLabel ? companyLabel + " · " + deptLabel : companyLabel;
   $("brief-round").textContent = PHASE_LABELS[phase] || "Round";
-  const text = briefText(me.company, me.department, phase);
-  $("brief-body").textContent = text || "No brief is available for this seat yet.";
+  const note = $("brief-note");
+  const merged = phase === "round2" && (me.company === "clock" || me.company === "flow");
+  note.hidden = !merged;
+  note.textContent = merged ? ROUND2_MERGE_NOTE : "";
+  renderBriefParagraphs(briefText(me.company, me.department, phase));
 }
 
 function renderAdmin() {
@@ -685,7 +721,7 @@ function setAdminMessage(message) {
 }
 
 function onSortTeams() {
-  if (state.sortBusy) return;
+  if (state.sortBusy || state.resetBusy) return;
   if (!state.firebaseReady || !state.db) {
     setAdminMessage("Firebase is not configured yet, so teams cannot be saved.");
     return;
@@ -747,6 +783,39 @@ function onStartRound(phase) {
   });
 }
 
+function onResetGame() {
+  if (state.resetBusy || state.sortBusy) return;
+  if (!state.firebaseReady || !state.db) {
+    setAdminMessage("Firebase is not configured yet, so the game cannot be reset.");
+    return;
+  }
+  if (!window.confirm("Reset the game? Players return to the waiting room and teams are cleared.")) return;
+  state.resetBusy = true;
+  $("reset-game").disabled = true;
+  const db = state.db;
+  db.ref("participants").once("value").then((snap) => {
+    const participants = snap.val() || {};
+    const updates = {
+      "session/phase": "lobby",
+      "session/round": null
+    };
+    Object.keys(participants).forEach((id) => {
+      updates["participants/" + id + "/company"] = null;
+      updates["participants/" + id + "/department"] = null;
+    });
+    return db.ref().update(updates);
+  }).then(() => {
+    setAdminMessage("Game reset. Players are back in the waiting room.");
+  }).catch((err) => {
+    console.error(err);
+    setAdminMessage("Could not reset the game. Check the database rules.");
+  }).then(() => {
+    state.resetBusy = false;
+    const button = $("reset-game");
+    if (button) button.disabled = false;
+  });
+}
+
 function bindEvents() {
   if (state.eventsBound) return;
   if (!$("join-hacker") || !$("admin-access")) return;
@@ -759,6 +828,7 @@ function bindEvents() {
   $("sort-teams").addEventListener("click", onSortTeams);
   $("start-round-1").addEventListener("click", () => onStartRound("round1"));
   $("start-round-2").addEventListener("click", () => onStartRound("round2"));
+  $("reset-game").addEventListener("click", onResetGame);
   document.querySelectorAll(".choice").forEach((button) => {
     button.addEventListener("click", (event) => {
       if (event.detail > 1) return;
