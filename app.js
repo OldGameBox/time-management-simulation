@@ -1,12 +1,13 @@
 // Paste your Firebase web app config here. Leave these empty until you create the project.
 const FIREBASE_CONFIG = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyCSgNVwxSAEdkJezAf_VGhBrlmIneXdNNw",
+  authDomain: "solya-time-management-sim.firebaseapp.com",
+  databaseURL: "https://solya-time-management-sim-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "solya-time-management-sim",
+  storageBucket: "solya-time-management-sim.firebasestorage.app",
+  messagingSenderId: "547211371655",
+  appId: "1:547211371655:web:0aa40d2f556d2651658422",
+  measurementId: "G-1QW1WBXPYT"
 };
 
 // Edit the briefs here. Shape: company → department → round.
