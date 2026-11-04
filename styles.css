@@ -261,6 +261,19 @@ input:focus {
 .brief {
   white-space: pre-wrap;
   font-size: 1.02rem;
+  margin: 0 0 0.95rem;
+}
+
+.brief:last-child {
+  margin-bottom: 0;
+}
+
+.brief-note {
+  margin: 0 0 0.95rem;
+  padding-bottom: 0.75rem;
+  color: var(--warn);
+  border-bottom: 1px solid var(--line-dim);
+  line-height: 1.45;
 }
 
 .security-note {
